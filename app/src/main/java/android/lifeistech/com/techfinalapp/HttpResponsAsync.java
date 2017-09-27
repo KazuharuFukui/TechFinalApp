@@ -98,23 +98,38 @@ public class HttpResponsAsync extends AsyncTask<Void, Void, String> {
 
             // String型の場合
             String title = jsonData.getJSONObject("volumeInfo").getString("title");
+            //String author = jsonData.getJSONObject("volumeInfo").getString("author");
+            //String publish = jsonData.getJSONObject("volumeInfo").getString("publish");
             String description = jsonData.getJSONObject("volumeInfo").getString("description");
-            String reader = jsonData.getJSONObject("saleInfo").getString("buyLink");
+            //String categories = jsonData.getJSONObject("volumeInfo").getString("categories");
             String saleability = jsonData.getJSONObject("saleInfo").getString("saleability");
+            String reader = jsonData.getJSONObject("saleInfo").getString("buyLink");
+            String thumbnail = jsonData.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail");
+
 
             Log.d("タイトル", title);
             Log.d("概要", description);
-            Log.d("概要", saleability);
+            Log.d("売却可能性", saleability);
+            Log.d("画像", thumbnail);
 
             Bundle bundle = new Bundle();
             bundle.putString("title", title);
+            //bundle.putString("author", author);
+            //bundle.putString("publish", publish);
             bundle.putString("description", description);
+            //bundle.putString("categories", categories);
+            bundle.putString("saleability", saleability);
+            //bundle.putString("reader", reader);
+            bundle.putString("thumbnail", thumbnail);
+
 
             if (saleability == "FREE") {
                 bundle.putString("reader", reader);
             } else {
                 bundle.putString("reader", "https://life-is-tech.com/");
             }
+
+
             callBack.onGet(bundle);
 
         } catch (JSONException e) {
