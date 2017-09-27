@@ -104,6 +104,7 @@ public class HttpResponsAsync extends AsyncTask<Void, Void, String> {
 
             Log.d("タイトル", title);
             Log.d("概要", description);
+            Log.d("概要", saleability);
 
             Bundle bundle = new Bundle();
             bundle.putString("title", title);
@@ -112,7 +113,7 @@ public class HttpResponsAsync extends AsyncTask<Void, Void, String> {
             if (saleability == "FREE") {
                 bundle.putString("reader", reader);
             } else {
-                bundle.putString("reader", "http://okusurinojikan.gozaru.jp/what.html");
+                bundle.putString("reader", "https://life-is-tech.com/");
             }
             callBack.onGet(bundle);
 
