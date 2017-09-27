@@ -1,5 +1,6 @@
 package android.lifeistech.com.techfinalapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +27,7 @@ public class ReviewActivity extends AppCompatActivity {
             public void onGet(Bundle bundle) {
                 String title = bundle.getString("title");
                 String description = bundle.getString("description");
-                String reader = bundle.getString("reader");
+                final String reader = bundle.getString("reader");
 
                 Log.d("タイトル", title);
                 Log.d("概要", description);
@@ -34,23 +35,29 @@ public class ReviewActivity extends AppCompatActivity {
                 titleText = (TextView) findViewById(R.id.titleText);
                 descriptionText = (TextView) findViewById(R.id.descriptionText);
                 readerText = (TextView) findViewById(R.id.readerText);
-                button = (Button) findViewById(R.id.button);
 
                 titleText.setText(title);
                 descriptionText.setText(description);
                 readerText.setText(reader);
 
-                // ボタンの動作
-                button.setOnClickListener(new View.OnClickListener() {
+
+                View.OnClickListener button1ClickListener = new View.OnClickListener() {
+                    @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse("http://google.com"));
+                                Uri.parse(reader));
                         startActivity(intent);
                     }
-                });
+                };
+                findViewById(R.id.readButton).setOnClickListener(button1ClickListener);
             }
         });
         async.execute();
+
+
+
     }
+
+
 }

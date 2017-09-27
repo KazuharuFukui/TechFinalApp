@@ -100,6 +100,7 @@ public class HttpResponsAsync extends AsyncTask<Void, Void, String> {
             String title = jsonData.getJSONObject("volumeInfo").getString("title");
             String description = jsonData.getJSONObject("volumeInfo").getString("description");
             String reader = jsonData.getJSONObject("saleInfo").getString("buyLink");
+            String saleability = jsonData.getJSONObject("saleInfo").getString("saleability");
 
             Log.d("タイトル", title);
             Log.d("概要", description);
@@ -107,8 +108,12 @@ public class HttpResponsAsync extends AsyncTask<Void, Void, String> {
             Bundle bundle = new Bundle();
             bundle.putString("title", title);
             bundle.putString("description", description);
-            bundle.putString("reader", reader);
 
+            if (saleability == "FREE") {
+                bundle.putString("reader", reader);
+            } else {
+                bundle.putString("reader", "http://okusurinojikan.gozaru.jp/what.html");
+            }
             callBack.onGet(bundle);
 
         } catch (JSONException e) {

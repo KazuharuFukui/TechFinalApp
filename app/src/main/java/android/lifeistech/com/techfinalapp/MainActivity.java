@@ -18,13 +18,18 @@ public class MainActivity extends AppCompatActivity {
         textView =(TextView)findViewById(R.id.textView);
         textView.setText("ようこそ");
 
+        View.OnClickListener buttonClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // インテントの作成
+                Intent intent = new Intent(MainActivity.this, ReviewActivity.class);
+                // 遷移先のアクティビティを起動
+                startActivity(intent);
+            }
+        };
+        findViewById(R.id.novelButton).setOnClickListener(buttonClickListener);
+
 
     }
 
-    public void onClick(View v){
-        // インテントの作成
-        Intent intent = new Intent(this, ReviewActivity.class);
-        // 遷移先のアクティビティを起動
-        startActivity(intent);
-    }
 }
