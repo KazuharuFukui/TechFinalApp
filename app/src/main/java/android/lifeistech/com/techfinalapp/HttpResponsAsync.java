@@ -98,10 +98,10 @@ public class HttpResponsAsync extends AsyncTask<Void, Void, String> {
 
             // String型の場合
             String title = jsonData.getJSONObject("volumeInfo").getString("title");
-            //String author = jsonData.getJSONObject("volumeInfo").getString("author");
-            //String publish = jsonData.getJSONObject("volumeInfo").getString("publish");
+            String author = jsonData.getJSONObject("volumeInfo").getString("author");
+            String publish = jsonData.getJSONObject("volumeInfo").getString("publish");
             String description = jsonData.getJSONObject("volumeInfo").getString("description");
-            //String categories = jsonData.getJSONObject("volumeInfo").getString("categories");
+            String categories = jsonData.getJSONObject("volumeInfo").getString("categories");
             String saleability = jsonData.getJSONObject("saleInfo").getString("saleability");
             String reader = jsonData.getJSONObject("saleInfo").getString("buyLink");
             String thumbnail = jsonData.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail");
@@ -114,16 +114,16 @@ public class HttpResponsAsync extends AsyncTask<Void, Void, String> {
 
             Bundle bundle = new Bundle();
             bundle.putString("title", title);
-            //bundle.putString("author", author);
-            //bundle.putString("publish", publish);
+            bundle.putString("author", author);
+            bundle.putString("publish", publish);
             bundle.putString("description", description);
-            //bundle.putString("categories", categories);
+            bundle.putString("categories", categories);
             bundle.putString("saleability", saleability);
-            //bundle.putString("reader", reader);
+            bundle.putString("reader", reader);
             bundle.putString("thumbnail", thumbnail);
 
 
-            if (saleability == "FREE") {
+            if (saleability.equals("FREE")) {
                 bundle.putString("reader", reader);
             } else {
                 bundle.putString("reader", "https://life-is-tech.com/");
