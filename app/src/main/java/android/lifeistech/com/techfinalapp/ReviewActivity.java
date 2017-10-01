@@ -31,10 +31,14 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
+
+
         HttpResponsAsync async = new HttpResponsAsync(new HttpResponsAsync.CallBack() {
             @Override
             public void onGet(Bundle bundle) {
                 String title = bundle.getString("title");
+                Log.d("タイトル", title);
+
                 String description = bundle.getString("description");
                 String thumbnail = bundle.getString("thumbnail");
                 final String reader = bundle.getString("reader");

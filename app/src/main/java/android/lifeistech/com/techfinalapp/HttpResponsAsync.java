@@ -2,7 +2,6 @@ package android.lifeistech.com.techfinalapp;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -98,13 +97,36 @@ public class HttpResponsAsync extends AsyncTask<Void, Void, String> {
 
             // String型の場合
             String title = jsonData.getJSONObject("volumeInfo").getString("title");
-            String author = jsonData.getJSONObject("volumeInfo").getString("author");
-            String publish = jsonData.getJSONObject("volumeInfo").getString("publish");
+            String reader = jsonData.getJSONObject("saleInfo").getString("buyLink");
+            String thumbnail = jsonData.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail");
+            String authors = jsonData.getJSONObject("volumeInfo").getString("authors");
+
+
+            try {
+                String datas = new JSONObject("volumeInfo").getString("authors");
+
+                //取得したいJSONデータの構造をもとに上記のパース方法いずれかを記述
+
+                for (int i = 0; i < datas.length(); i++) {
+                    JSONObject data = jsonData.getJSONObject(String.valueOf(i));
+                    // 名前を取得
+                    //String name = data.getString("name");
+                    // 年齢を取得
+                    //String age = data.getString("age");
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+            String publish = jsonData.getJSONObject("volumeInfo").getString("publishedDate");
             String description = jsonData.getJSONObject("volumeInfo").getString("description");
             String categories = jsonData.getJSONObject("volumeInfo").getString("categories");
             String saleability = jsonData.getJSONObject("saleInfo").getString("saleability");
-            String reader = jsonData.getJSONObject("saleInfo").getString("buyLink");
-            String thumbnail = jsonData.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail");
 
 
             Log.d("タイトル", title);
@@ -114,13 +136,14 @@ public class HttpResponsAsync extends AsyncTask<Void, Void, String> {
 
             Bundle bundle = new Bundle();
             bundle.putString("title", title);
-            bundle.putString("author", author);
+            bundle.putString("reader", reader);
+            bundle.putString("thumbnail", thumbnail);
+            bundle.putString("authors", authors);
             bundle.putString("publish", publish);
             bundle.putString("description", description);
             bundle.putString("categories", categories);
             bundle.putString("saleability", saleability);
-            bundle.putString("reader", reader);
-            bundle.putString("thumbnail", thumbnail);
+
 
 
             if (saleability.equals("FREE")) {

@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        /**
         HttpResponsAsync async = new HttpResponsAsync(new HttpResponsAsync.CallBack() {
             @Override
             public void onGet(Bundle bundle) {
@@ -32,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        async.execute();
+        async.execute();*/
 
-        //textView =(TextView)findViewById(R.id.textView);
-        //textView.setText("ようこそ");
+        textView =(TextView)findViewById(R.id.textView);
+        textView.setText("ようこそ");
 
         View.OnClickListener buttonClickListener = new View.OnClickListener() {
             @Override
