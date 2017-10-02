@@ -87,81 +87,74 @@ public class HttpResponsAsync extends AsyncTask<Void, Void, String> {
         super.onPostExecute(result);
         // doInBackground後処理
 
-        //Log.d("DEBUGGGGG", result);
-
+        Log.d("DEBUGGGGG", result);
 
         try {
             JSONObject jsonData = new JSONObject(result);
             // 配列を取得する場合
             //JSONArray jsonArray = new JSONObject(result).getJSONArray("name");
+            // String型の場合は下記
 
-            // String型の場合
+            // 1タイトル
             String title = jsonData.getJSONObject("volumeInfo").getString("title");
+            // 2購入リンク
             String reader = jsonData.getJSONObject("saleInfo").getString("buyLink");
+            // 3書籍の画像
             String thumbnail = jsonData.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail");
-            String authors = jsonData.getJSONObject("volumeInfo").getString("authors");
 
-
-            try {
-                String datas = new JSONObject("volumeInfo").getString("authors");
-
-                //取得したいJSONデータの構造をもとに上記のパース方法いずれかを記述
-
-                for (int i = 0; i < datas.length(); i++) {
-                    JSONObject data = jsonData.getJSONObject(String.valueOf(i));
-                    // 名前を取得
-                    //String name = data.getString("name");
-                    // 年齢を取得
-                    //String age = data.getString("age");
-
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+            // 4著者
+            String authors = "";
+            //取得したいJSONデータの構造をもとに上記のパース方法いずれかを記述
+            for (int i = 0; i < 1; i++) {
+                authors = jsonData.getJSONObject("volumeInfo").getJSONArray("authors").getString(i);
             }
+            Log.d("著者", authors);
 
-
-
-
+            // 5出版年
             String publish = jsonData.getJSONObject("volumeInfo").getString("publishedDate");
+            // 6あらすじ
             String description = jsonData.getJSONObject("volumeInfo").getString("description");
+            // 7分類
             String categories = jsonData.getJSONObject("volumeInfo").getString("categories");
+            // 8出版社
+            String publisher = jsonData.getJSONObject("volumeInfo").getString("publisher");
+            // 9販売状況
             String saleability = jsonData.getJSONObject("saleInfo").getString("saleability");
 
-
+            // Log
             Log.d("タイトル", title);
             Log.d("概要", description);
             Log.d("売却可能性", saleability);
             Log.d("画像", thumbnail);
 
+            // bundle
             Bundle bundle = new Bundle();
-            bundle.putString("title", title);
-            bundle.putString("reader", reader);
-            bundle.putString("thumbnail", thumbnail);
-            bundle.putString("authors", authors);
-            bundle.putString("publish", publish);
-            bundle.putString("description", description);
-            bundle.putString("categories", categories);
-            bundle.putString("saleability", saleability);
+            bundle.putString("title", title);//1
+            //bundle.putString("reader", reader);//2
+            bundle.putString("thumbnail", thumbnail);//3
 
 
+            bundle.putString("authors", authors);//4
+            bundle.putString("publish", publish);//5
+            bundle.putString("description", description);//6
+            bundle.putString("categories", categories);//7
+            bundle.putString("publisher", publisher);//8
+            bundle.putString("saleability", saleability);//9・一応
 
+            // 2readerの追加
             if (saleability.equals("FREE")) {
                 bundle.putString("reader", reader);
             } else {
                 bundle.putString("reader", "https://life-is-tech.com/");
             }
 
-
             callBack.onGet(bundle);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
-
-
-
 
     public String readInputStream(InputStream in) throws IOException {
         StringBuffer sb = new StringBuffer();

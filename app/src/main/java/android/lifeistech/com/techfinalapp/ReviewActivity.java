@@ -8,7 +8,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,9 +22,13 @@ import java.net.URL;
 
 public class ReviewActivity extends AppCompatActivity {
 
-    TextView titleText;
-    TextView descriptionText;
-    TextView readerText;
+    TextView titleText;//1
+    TextView readerText;//2
+    TextView authorsText;//4
+    TextView publishText;//5
+    TextView descriptionText;//6
+    //TextView categoriesText;//7
+    TextView publisherText;//8
     ImageView imageView;
     Button button;
 
@@ -31,29 +37,42 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         HttpResponsAsync async = new HttpResponsAsync(new HttpResponsAsync.CallBack() {
             @Override
             public void onGet(Bundle bundle) {
                 String title = bundle.getString("title");
-                Log.d("タイトル", title);
-
+                String authors = bundle.getString("authors");
+                String publish = bundle.getString("publish");
                 String description = bundle.getString("description");
                 String thumbnail = bundle.getString("thumbnail");
+                String publisher = bundle.getString("publisher");
                 final String reader = bundle.getString("reader");
 
                 Log.d("タイトル", title);
                 Log.d("概要", description);
 
                 titleText = (TextView) findViewById(R.id.titleText);
-                descriptionText = (TextView) findViewById(R.id.descriptionText);
                 readerText = (TextView) findViewById(R.id.readerText);
+                authorsText = (TextView) findViewById(R.id.authorsText);
+                publishText = (TextView) findViewById(R.id.publishText);
+                descriptionText = (TextView) findViewById(R.id.descriptionText);
+                publisherText = (TextView) findViewById(R.id.publisherText);
+
                 imageView = (ImageView) findViewById(R.id.imageView);
 
                 titleText.setText(title);
-                descriptionText.setText(description);
                 readerText.setText(reader);
+                authorsText.setText(authors);
+                publishText.setText(publish);
+                descriptionText.setText(description);
+                publisherText.setText(publisher);
+
 
                 // 画像の追加
                 new AsyncTask<String, Void, Bitmap>() {
@@ -93,6 +112,7 @@ public class ReviewActivity extends AppCompatActivity {
                 }.execute(thumbnail);   // 画像のURL
 
 
+
                 //　ボタンクリック時に本を試し読みする
                 View.OnClickListener button1ClickListener = new View.OnClickListener() {
                     @Override
@@ -109,4 +129,20 @@ public class ReviewActivity extends AppCompatActivity {
         async.execute();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        boolean result = true;
+
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+                result = super.onOptionsItemSelected(item);
+        }
+
+        return result;
+    }
 }
