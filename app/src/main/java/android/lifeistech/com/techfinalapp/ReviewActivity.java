@@ -19,6 +19,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import android.content.Intent;
 
 public class ReviewActivity extends AppCompatActivity {
 
@@ -43,7 +44,22 @@ public class ReviewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        HttpResponsAsync async = new HttpResponsAsync(new HttpResponsAsync.CallBack() {
+        titleText = (TextView) findViewById(R.id.titleText);
+        readerText = (TextView) findViewById(R.id.readerText);
+        authorsText = (TextView) findViewById(R.id.authorsText);
+        publishText = (TextView) findViewById(R.id.publishText);
+        descriptionText = (TextView) findViewById(R.id.descriptionText);
+        publisherText = (TextView) findViewById(R.id.publisherText);
+        imageView = (ImageView) findViewById(R.id.imageView);
+
+        // インテントを取得
+        Intent intent = getIntent();
+        // インテントに保存されたデータを取得
+        String category = intent.getStringExtra("keyword");
+        //String category = "Fiction";
+        Log.d("category", category);
+
+        HttpResponsAsync async = new HttpResponsAsync(category, new HttpResponsAsync.CallBack() {
             @Override
             public void onGet(Bundle bundle) {
                 String title = bundle.getString("title");
@@ -54,17 +70,8 @@ public class ReviewActivity extends AppCompatActivity {
                 String publisher = bundle.getString("publisher");
                 final String reader = bundle.getString("reader");
 
-                Log.d("タイトル", title);
-                Log.d("概要", description);
-
-                titleText = (TextView) findViewById(R.id.titleText);
-                readerText = (TextView) findViewById(R.id.readerText);
-                authorsText = (TextView) findViewById(R.id.authorsText);
-                publishText = (TextView) findViewById(R.id.publishText);
-                descriptionText = (TextView) findViewById(R.id.descriptionText);
-                publisherText = (TextView) findViewById(R.id.publisherText);
-
-                imageView = (ImageView) findViewById(R.id.imageView);
+                //Log.d("タイトル", title);
+                //Log.d("概要", description);
 
                 titleText.setText(title);
                 readerText.setText(reader);
@@ -92,7 +99,7 @@ public class ReviewActivity extends AppCompatActivity {
                             image = BitmapFactory.decodeStream(is, null, options);
                             is.close();
                         } catch (Exception e) {
-                            Log.i("button", e.getMessage());
+                            //Log.i("button", e.getMessage());
                         }
                         return image;
                     }

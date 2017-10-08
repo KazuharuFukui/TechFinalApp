@@ -91,7 +91,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="9"
+                    android:layout_weight="8"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -115,7 +115,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="9"
+                    android:layout_weight="11"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -280,8 +280,12 @@
                     <TextView
                         android:id="@+id/descriptionText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Description"
+                        android:layout_height="match_parent"
+                        android:maxLines="5"
+                        android:focusable="false"
+                        android:inputType="textMultiLine"
+                        android:text="Description, Description, Description, Description"
+                        android:textAlignment="viewStart"
                         android:textSize="17sp" />
 
                 </LinearLayout>
